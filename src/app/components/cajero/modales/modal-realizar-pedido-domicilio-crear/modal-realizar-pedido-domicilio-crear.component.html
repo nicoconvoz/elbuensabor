@@ -1,0 +1,80 @@
+<div>
+  <button mat-button mat-dialog-close color="warn" style="float:right;">X</button>
+  <h1 mat-dialog-title><strong>{{action}} Domicilio</strong></h1>
+
+  <div mat-dialog-content>
+
+    <form [formGroup]="form2">
+
+      <input hidden formControlName="id">
+      <input hidden formControlName="localidad">
+      <input hidden formControlName="propietario">
+
+      <div class="form-row">
+
+        <mat-form-field class="form-group col-md-6">
+          <mat-label>Calle</mat-label>
+          <input matInput placeholder="Domicilio Calle" formControlName="calle">
+          <mat-error *ngIf="errorHandling('calle', 'required')">
+            La calle es obligatoria.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-group col-md-6">
+          <mat-label>Número</mat-label>
+          <input matInput placeholder="Domicilio Número" formControlName="numero">
+          <mat-error *ngIf="errorHandling('numero', 'required')">
+            El número es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="errorHandling('numero', 'pattern')">
+            El número ingresado es invalido.
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+
+
+      <div class="form-row">
+
+        <mat-form-field class="form-group col-md-6">
+          <mat-label>Departamento</mat-label>
+          <input matInput placeholder="Domicilio Departamento" formControlName="departamento">
+          <mat-error *ngIf="errorHandling('departamento', 'required')">
+            El departamento es obligatorio.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-group col-md-6">
+          <mat-label>Piso</mat-label>
+          <input matInput placeholder="Domicilio Piso" formControlName="piso">
+          <mat-error *ngIf="errorHandling('piso', 'required')">
+            El piso es obligatorio.
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+
+
+      <div class="form-row">
+        <mat-form-field class="form-group col-md-4">
+          <mat-select matInput formControlName="opcionesLocalidad" placeholder="Localidad">
+            <span *ngFor="let localidades of this.localDataLocalidad">
+              <mat-option (click)="cargarLocalidad(localidades.id)" value="localidades.id">{{localidades.nombre}}
+              </mat-option>
+            </span>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+
+      <div class="container-button">
+        <button
+          *ngIf="this.form2.errors == null && this.form2.controls['calle'].value!= null && this.form2.controls['numero'].value!= null && this.form2.controls['departamento'].value!= null && this.form2.controls['piso'].value!= null "
+          mat-raised-button color="primary" (click)="onAction()">{{action}}</button>
+        <button mat-raised-button color="warn" (click)="onCancel()">Cancelar</button>
+      </div>
+
+    </form>
+
+  </div>
+</div>

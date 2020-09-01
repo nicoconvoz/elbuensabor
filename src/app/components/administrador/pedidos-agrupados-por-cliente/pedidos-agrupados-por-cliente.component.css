@@ -1,0 +1,54 @@
+.contenedorDetalles{
+    width:200px;
+}
+.detalles{
+    color: gray;
+}
+.TCClass{
+    flex: 0 0 250px;
+}
+.container-btn-new {
+    display: inline-block;
+    width: 97%;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+.busqueda{
+    float:left;
+    padding-left:20px;
+}
+.botonagregar{
+    float:right;
+    padding-right:20px;
+}
+.rojo{
+    background-color: #fa5d49;
+}
+.azul{
+    background-color: rgb(203, 235, 255);
+}
+.verde{
+    background-color: rgba(155, 248, 170, 0.979);
+}
+.dorado{
+    background-color:lightgoldenrodyellow;
+}
+.verdeOscuro{
+    background-color: #5ec574;
+}
+.magenta{
+    background-color: lightpink;
+}
+.gris{
+    background-color: lightgray;
+}
+.TCClass{
+    flex: 0 0 350px;
+}
+table {
+    width: 100%;
+  }
+.excel{
+    float: right;
+    margin-right: 20px;
+}

@@ -1,0 +1,66 @@
+<div class="card m-2">
+  <ng-container *ngIf="delivery; else elseTemplate">
+    <div class="card-body">
+      <h4 class="card-title"><b>Pedido</b>: {{ comanda.id }}</h4>
+      <h4 class="card-title">
+        <b>Cliente</b>: {{ comanda.domicilio.propietario.nombre }}
+        {{ comanda.domicilio.propietario.apellido }}
+      </h4>
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Producto</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let producto of productos; let index = index">
+            <td>
+              {{ cantidad[index] }}
+            </td>
+            <td>
+              {{ producto.nombre }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="row ml-1">
+        <h4 class="mr-2"><b>Pago</b>: {{ tipoPago }}</h4>
+        <h4><b>Total</b>: {{ total }}</h4>
+      </div>
+      <h4>
+        <b>Direccion</b>: {{ comanda.domicilio.calle }}
+        {{ comanda.domicilio.numero }}, {{ comanda.domicilio.localidad.nombre }}
+      </h4>
+      <button type="button" class="btn btn-outline-info" (click)="pedidoEntregar(comanda.id)">
+        Entregado
+      </button>
+    </div>
+  </ng-container>
+  <ng-template #elseTemplate>
+    <div class="card-body" *ngIf="productos.length > 0">
+      <h3 class="card-title">Pedido {{ comanda.id }}</h3>
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Producto</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let producto of productos; let index = index">
+            <td>
+              {{ cantidad[index] }}
+            </td>
+            <td>
+              {{ producto.nombre }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button type="button" class="btn btn-outline-success" (click)="terminarPedido(comanda.id)">
+        Terminar
+      </button>
+    </div>
+  </ng-template>
+</div>

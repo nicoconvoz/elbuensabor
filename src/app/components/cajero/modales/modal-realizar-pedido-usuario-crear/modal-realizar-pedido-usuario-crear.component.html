@@ -1,0 +1,103 @@
+<div >
+    <button mat-button mat-dialog-close color="warn" style="float:right;">X</button>
+    <h1 mat-dialog-title><strong>{{action}} Usuario</strong></h1>
+    
+    <div mat-dialog-content>
+    
+      <form [formGroup]="form">
+    
+        <input hidden formControlName="id">
+        <div class="form-row">
+    
+          <mat-form-field class="form-group col-md-6">
+            <mat-label>Nombre</mat-label>
+            <input matInput placeholder="Usuario Nombre" formControlName="nombre">
+            <mat-error *ngIf="errorHandling('nombre', 'required')">
+              El nombre es obligatorio.
+            </mat-error>
+          </mat-form-field>
+    
+          <mat-form-field class="form-group col-md-6">
+            <mat-label>Apellido</mat-label>
+            <input matInput placeholder="Usuario Apellido" formControlName="apellido">
+            <mat-error *ngIf="errorHandling('apellido', 'required')">
+              El apellido es obligatorio.
+            </mat-error>
+          </mat-form-field>
+    
+        </div>
+    
+    
+        <div class="form-row">
+    
+          <mat-form-field class="form-group col-md-6">
+            <mat-label>DNI</mat-label>
+            <input matInput placeholder="Usuario DNI" formControlName="dni">
+            <mat-error *ngIf="errorHandling('dni', 'required')">
+              El DNI es obligatorio.
+            </mat-error>
+          </mat-form-field>
+    
+          <mat-form-field class="form-group col-md-6">
+            <mat-label>Fecha Nacimiento</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="fechaNacimiento">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="errorHandling('fechaNacimiento', 'required')">
+              La fecha de nacimiento es obligatoria.
+            </mat-error>
+          </mat-form-field>
+    
+        </div>
+    
+        <div class="form-row">
+    
+          <mat-form-field class="form-group col-md-6">
+            <mat-label>Teléfono</mat-label>
+            <input matInput placeholder="Usuario Teléfono" formControlName="telefono">
+            <mat-error *ngIf="errorHandling('telefono', 'required')">
+              El teléfono es obligatorio.
+            </mat-error>
+          </mat-form-field>
+    
+          <mat-form-field class="form-group col-md-6">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" placeholder="Usuario Email" formControlName="email">
+            <mat-error *ngIf="errorHandling('email', 'required')">
+              El email es obligatorio.
+            </mat-error>
+            <mat-error *ngIf="errorHandling('email', 'email')">
+              El email ingresado es invalido.
+            </mat-error>
+          </mat-form-field>
+    
+          <input hidden formControlName="esCliente">
+          <input hidden formControlName="rol">
+    
+        </div>
+
+        <div class="form-row">
+          <input hidden formControlName="password">
+    
+          <mat-form-field class="form-group col-md-4">
+            <mat-label>Nueva Password</mat-label>
+            <input type="password" id="P1" matInput placeholder="Usuario Password" >
+          </mat-form-field>
+    
+          <mat-form-field class="form-group col-md-4">
+            <mat-label>Repetir Password</mat-label>
+            <input type="password" id="P2" matInput placeholder="Usuario Password" >
+          </mat-form-field>
+    
+        </div>
+    
+    
+        <div class="container-button">
+          <button *ngIf="this.form.errors == null && this.form.controls['nombre'].value!= null && this.form.controls['apellido'].value!= null && this.form.controls['dni'].value!= null && this.form.controls['fechaNacimiento'].value!= null && this.form.controls['telefono'].value!= null && this.form.controls['email'].value!= null" mat-raised-button color="primary" (click)="onAction()">{{action}}</button>
+          <button mat-raised-button color="warn" (click)="onCancel()">Cancelar</button>
+        </div>
+    
+      </form>
+    
+    </div>
+    </div>

@@ -1,0 +1,15 @@
+<div *ngIf="this.usuario!=null">
+    <div *ngIf="this.usuario.rol==='administrador' || this.usuario.rol==='cajero'">
+        <mat-tab-group>
+            <mat-tab label="Realizar Pedidos">
+                <app-realizar-pedido></app-realizar-pedido>
+            </mat-tab>
+            <mat-tab label="Confirmar Pedidos">
+                <app-confirmar-pedido></app-confirmar-pedido>
+            </mat-tab>
+            <mat-tab label="Cocina Pedidos">
+                <app-cocina-pedido></app-cocina-pedido>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

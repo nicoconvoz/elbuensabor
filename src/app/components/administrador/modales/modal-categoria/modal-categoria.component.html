@@ -1,0 +1,49 @@
+<button mat-button mat-dialog-close color="warn" style="float:right;">X</button>
+<h1 mat-dialog-title><strong>{{action}} Categoria</strong></h1>
+
+<div mat-dialog-content>
+
+  <form [formGroup]="form">
+
+    <input hidden formControlName="id">
+
+    <div class="form-row">
+
+      <mat-form-field class="form-group col-lg-12">
+        <mat-label>Nombre</mat-label>
+        <input matInput placeholder="Nombre" formControlName="nombre">
+        <mat-error *ngIf="errorHandling('nombre', 'required')">
+          El nombre es obligatorio.
+        </mat-error>
+      </mat-form-field>
+
+     
+    </div>
+
+    <div class="form-row">
+    <mat-form-field class="form-group col-lg-12">
+        <mat-label>Descripción</mat-label>
+        <textarea matInput placeholder="Descripción" formControlName="descripcion" rows="5" cols="25"></textarea>
+        <mat-error *ngIf="errorHandling('descripcion', 'required')">
+          La descripción es obligatoria.
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <h5><em>Selecciona foto para la categoria</em></h5>
+        <input type="file" accept=".png, .jpg" (change)="onUpload($event)">
+      </div>
+      <div>
+        <input #imagenPlato type="text" [value]="urlImage | async" id="urlImagen" hidden >
+    </div>
+  </div>
+
+    <div class="container-button">
+      <button mat-raised-button color="primary" (click)="onAction()">{{action}}</button>
+      <button mat-raised-button color="warn" (click)="onCancel()">Cancelar</button>
+    </div>
+
+  </form>
+
+</div>

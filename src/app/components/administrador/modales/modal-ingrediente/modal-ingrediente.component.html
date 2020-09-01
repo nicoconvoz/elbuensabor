@@ -1,0 +1,55 @@
+<button mat-button mat-dialog-close color="warn" style="float:right;">X</button>
+<h1 mat-dialog-title><strong>{{action}} Ingredientes</strong></h1>
+
+<div mat-dialog-content>
+
+    <form [formGroup]="form">
+
+        <input hidden formControlName="id">
+        <input hidden formControlName="ingrediente">
+        <input hidden formControlName="unidadMedida">
+        <input hidden formControlName="plato">
+
+        <div class="form-row">
+
+
+
+            <mat-form-field class="form-group col-md-4">
+                <mat-select matInput formControlName="opcionesIngrediente" placeholder="Ingrediente">
+                    <span *ngFor="let ingredientes of this.localDataInsumo">
+                        <mat-option (click)="cargarIngrediente(ingredientes)"
+                            value="ingredientes.id">{{ingredientes.nombre}}</mat-option>
+                    </span>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="form-group col-md-4">
+                <mat-label>Cantidad</mat-label>
+                <input matInput placeholder="Cantidad" formControlName="cantidad">
+                <mat-error *ngIf="errorHandling('cantidad', 'required')">
+                    La cantidad es obligatoria.
+                </mat-error>
+            </mat-form-field>
+
+
+            <mat-form-field class="form-group col-md-4">
+                <mat-select formControlName="unidadMedidaOpciones" placeholder="Unidad Medida">
+                    <span *ngFor="let unidadMedida of this.localDataUnidadMedida">
+                        <mat-option (click)="agregarUnidadMedida(unidadMedida)" value="unidadMedida.id">
+                            {{unidadMedida.nombre}}</mat-option>
+                    </span>
+                </mat-select>
+            </mat-form-field>
+
+
+
+        </div>
+
+        <div class="container-button">
+            <button mat-raised-button color="primary" (click)="onAction()">{{action}}</button>
+            <button mat-raised-button color="warn" (click)="onCancel()">Cancelar</button>
+        </div>
+
+    </form>
+
+</div>

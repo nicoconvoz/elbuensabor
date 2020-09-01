@@ -1,0 +1,21 @@
+.navbar {
+    background-color: rgb(255, 145, 0);
+}
+.navbar-brand{
+    color: whitesmoke;
+    font-family: 'Pacifico', cursive;
+    text-decoration: none;
+}
+.navbar-nav{
+    margin-left: auto;
+    float: right;
+}
+.navbar-nav li a{
+    font-size: 90%;
+    letter-spacing: 1px;
+    word-spacing: 3px;
+    transition: all 0.1s;
+}
+.navbar-nav li a:hover{
+    border-bottom: 2px solid whitesmoke;
+}

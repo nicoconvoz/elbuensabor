@@ -1,0 +1,33 @@
+.contenedorDetalles{
+    width:200px;
+}
+.detalles{
+    color: gray;
+}
+.TCClass{
+    flex: 0 0 250px;
+}
+.container-btn-new {
+    display: inline-block;
+    width: 97%;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+.busqueda{
+    float:left;
+    padding-left:20px;
+}
+.botonagregar{
+    float:right;
+    padding-right:20px;
+}
+table {
+    width: 100%;
+  }
+
+  .purple{
+    background: purple !important;
+}
+.exportar{
+    float: right;
+}

@@ -1,0 +1,35 @@
+<div *ngIf="this.usuario!=null">
+<div *ngIf="this.usuario.rol==='administrador'" >
+<mat-tab-group>
+    <mat-tab label="Usuarios"> 
+        <app-usuario></app-usuario> 
+    </mat-tab>
+    <mat-tab label="Categorias">
+        <app-categoria></app-categoria>
+    </mat-tab>
+    <mat-tab label="Pedidos">
+        <app-pedido></app-pedido>
+    </mat-tab>
+    <mat-tab label="Recetas">
+        <app-receta></app-receta>
+    </mat-tab>
+    <mat-tab label="Insumos">
+        <app-insumo></app-insumo>
+    </mat-tab>
+    <mat-tab label="Stock Faltante">
+        <app-faltante-stock></app-faltante-stock>
+    </mat-tab>
+    <mat-tab label="Ranking Platos">
+        <app-ranking-platos></app-ranking-platos>
+    </mat-tab>
+    <mat-tab label="Pedidos Por Clientes">
+        <app-pedidos-agrupados-por-cliente></app-pedidos-agrupados-por-cliente>
+    </mat-tab>
+    <mat-tab label="Recaudaciones">
+        <app-recaudaciones></app-recaudaciones>
+    </mat-tab>
+</mat-tab-group>
+</div>
+</div>
+
+

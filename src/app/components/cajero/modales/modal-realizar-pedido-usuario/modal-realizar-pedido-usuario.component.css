@@ -1,0 +1,20 @@
+.container-btn-new {
+    display: inline-block;
+    width: 97%;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+.busqueda{
+    float:left;
+    padding-left:20px;
+}
+.botonagregar{
+    float:right;
+}
+table {
+    width: 100%;
+  }
+
+  .purple{
+    background: purple !important;
+}

@@ -1,0 +1,76 @@
+<div class="home">
+    <div class="container">
+        <h1 style="color: white; font-family: Verdana; text-align: center;">EL BUEN SABOR</h1>
+    </div>
+    <div class="row" style="margin: 1%;">
+        <h3 style="color: white; font-family: Verdana;">
+            Nos caracteriza la calidad, el buen sabor y la excelencia. Mirá nuestro menu, elegí desde
+            la comodidad de tu casa, y en cuestion de un momento uno de nuestros delivery estará entregando
+            el pedido en tu casa.
+        </h3>
+        <h3 style="color: white; font-family: Verdana;">
+            Horarios de Atención: Lunes a Domingos 20:00 a 00:00. Sabados y Domingos 11:00 a 15:00
+        </h3>
+    </div>
+    <div class="container" style="text-align:center;">
+        <ul class="steps">
+            <li style="font-family: Verdana;"><img class="imagenPaso" src="../../assets/imagenes/adress.png"
+                    alt="iconoDireccion"> Ingresá o
+                Registrate con tus datos</li>
+            <li style="font-family: Verdana;"><img class="imagenPaso" src="../../assets/imagenes/burguer.png"
+                    alt="iconoComida"> Elegí tu comida</li>
+            <li style="font-family: Verdana;"><img class="imagenPaso" src="../../assets/imagenes/creditcard.png"
+                    alt="iconoPago"> Selecciona medio de
+                pago y espera tu comida</li>
+        </ul>
+    </div>
+</div>
+<div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 style="text-align: center; font-family: Verdana; margin-top: 1%; text-align: center;"><b>Algunos de
+                    nuestros mejores platos</b></h1>
+        </div>
+    </div>
+    <div class="row" style="text-align: center;">
+        <div class="col-sm-4" *ngFor="let plato of platos">
+            <a href="/catalogo"><img src="{{plato.imagen}}" alt="plato" class="plate"></a>
+            <h2>{{plato.nombre}}</h2>
+        </div>
+    </div>
+</div>
+<div class="row" style="margin: 1%;">
+    <div class="col-sm-12">
+        <h2 style="text-align: center; margin-top: 1%;"><b>Imágenes de nuestro local</b></h2>
+        <h3 style="font-family: Verdana;">Somos una empresa mendocina que nació en Junio del 2020 y actualmente nos
+            encontramos
+            en crecimiento. Buscamos ofrecer la mejor calidad de la industria y aportar un nuevo
+            sabor a todos los mendocinos.
+        </h3>
+    </div>
+    <div class="col-sm-6" style="text-align: center;">
+        <img src="../../../assets/imagenes/restaurante.jpg" width="100%" />
+    </div>
+    <div class="col-sm-6" style="text-align: center;">
+        <img src="../../../assets/imagenes/restaurante2.jpg" width="100%" />
+    </div>
+    <div class="col-sm-12">
+        <h2 style="text-align: center; margin-top: 2%;"><b>Nuestra Ubicación</b></h2>
+    </div>
+    <div class="col-sm-12">
+        <img width="100%" height="400px" src="../../../assets/imagenes/ubicacion.png">
+        <h3>Ubicación Av. Las Heras y Av. San Martin, Ciudad de Mendoza</h3>
+    </div>
+</div>
+<div class="footer">
+    <footer>
+        <div class="container">
+            <div class="row">
+                <p>EL BUEN SABOR - LABORATORIO 4 - UNIVERSIDAD TECNOLOGICA NACIONAL</p>
+            </div>
+            <div class="row">
+                <p>Sitio web creado por Astorga, Gutierrez Caligaris, Rocha y Valenti. 2018-2020</p>
+            </div>
+        </div>
+    </footer>
+</div>

@@ -1,0 +1,178 @@
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-usuario-tab" data-toggle="tab" href="#nav-usuario" role="tab"
+            aria-controls="nav-home" aria-selected="true">Usuario</a>
+        <a class="nav-item nav-link" id="nav-domicilio-tab" data-toggle="tab" href="#nav-domicilio" role="tab"
+            aria-controls="nav-profile" aria-selected="false">Domicilios</a>
+        <a class="nav-item nav-link" id="nav-pedidos-tab" data-toggle="tab" href="#nav-pedidos" role="tab"
+            aria-controls="nav-contact" aria-selected="false">Mis Pedidos</a>
+    </div>
+</nav>
+<div class="tab-content letra" id="nav-tabContent">
+    <div class="tab-pane fade show active" style="margin: 1%;" id="nav-usuario" role="tabpanel"
+        aria-labelledby="nav-usuario-tab">
+        <div style="margin-top: 1%;">
+            <form>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Nombre</label>
+                        <input value="{{usuario.nombre}}" [(ngModel)]="usuario.nombre"
+                            [ngModelOptions]="{standalone: true}" placeholder="Ingrese nombre..." type="text"
+                            class="form-control" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputPassword4">Apellido</label>
+                        <input value="{{usuario.apellido}}" [(ngModel)]="usuario.apellido"
+                            [ngModelOptions]="{standalone: true}" placeholder="Ingrese apellido..." type="text"
+                            class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">DNI</label>
+                        <input value="{{usuario.dni}}" [(ngModel)]="usuario.dni" [ngModelOptions]="{standalone: true}"
+                            placeholder="Ingrese DNI..." type="number" class="form-control">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputPassword4">Fecha de Nacimiento</label>
+                        <input value="{{reformatDate}}" [(ngModel)]="reformatDate"
+                            (change)="onDateChange($event.target.value)" [ngModelOptions]="{standalone: true}"
+                            type="date" class="form-control">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Email</label>
+                        <input value="{{usuario.email}}" placeholder="Ingrese email..." type="email"
+                            class="form-control" disabled>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputPassword4">Contraseña</label>
+                        <input value="{{usuario.password}}" [(ngModel)]="usuario.password"
+                            [ngModelOptions]="{standalone: true}" placeholder="Ingrese contraseña..." type="password"
+                            class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Teléfono</label>
+                        <input value="{{usuario.telefono}}" placeholder="Ingrese teléfono..."
+                            [(ngModel)]="usuario.telefono" [ngModelOptions]="{standalone: true}" type="text"
+                            class="form-control">
+                    </div>
+                    <div class="form-group col-md-6" *ngIf="esAdministrador">
+                        <label for="inputPassword4">Rol</label>
+                        <select value="{{usuario.rol}}" [(ngModel)]="usuario.rol" [ngModelOptions]="{standalone: true}"
+                            type="text" class="form-control" (change)="onChangeRol($event.target.value)">
+                            <option value="cliente">Cliente</option>
+                            <option value="cajero">Cajero</option>
+                            <option value="cocinero">Cocinero</option>
+                            <option value="delivery">Delivery</option>
+                            <option value="administrador">Administrador</option>
+                        </select>
+                    </div>
+                </div>
+                <button style="margin-right: 1%;" type="submit" class="btn btn-secondary">Cancelar</button>
+                <button type="submit" class="btn btn-primary" (click)="updateUsuario(usuario)">Guardar</button>
+            </form>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="nav-domicilio" role="tabpanel" aria-labelledby="nav-domicilio-tab">
+        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modalDomUsuario"
+            style="float: right; margin: 0.5%;" (click)="resetear()">Agregar +</button>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col" hidden>Nro. Domicilio</th>
+                        <th scope="col">Calle</th>
+                        <th scope="col">Número</th>
+                        <th scope="col">Piso</th>
+                        <th scope="col">Departamento</th>
+                        <th scope="col">Localidad</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of domicilios">
+                        <th scope="row" hidden>{{item.id}}</th>
+                        <td>{{item.calle}}</td>
+                        <td>{{item.numero}}</td>
+                        <td>{{item.piso}}</td>
+                        <td>{{item.departamento}}</td>
+                        <td>Localidad</td>
+                        <td>
+                            <button type="button" data-toggle="modal" data-target="#modalDomUsuario"
+                                class="btn btn-warning" (click)="onPreUpdate(item)">Editar</button>
+                            <button type="button" class="btn btn-danger" (click)="deleteDomicilio(item)">Borrar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <app-modal-dom-usuario [domicilioSeleccionado]="domicilioSeleccionado" [id]="idP"></app-modal-dom-usuario>
+    </div>
+    <div class="tab-pane fade" id="nav-pedidos" role="tabpanel" aria-labelledby="nav-pedidos-tab">
+        <div class="letra" style="margin: 1%;">
+            <h2>Pedidos Actuales Aceptados</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nro. Pedido</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Factura</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of pedidosActuales">
+                            <th scope="row">{{item.id}}</th>
+                            <td>{{item.estado.nombre}}</td>
+                            <td>{{item.fecha}}</td>
+                            <td>
+                                <button type="button" class="btn btn-success" 
+                                    (click)="IdPedidoSeleccionado(item.id)">Ver Factura</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-8">
+                    <h2>Historial de Pedidos</h2>
+                </div>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" placeholder="Buscar por fecha..."
+                        (keyup)="onKeyFilter($event.target.value)">
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nro. Pedido</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Factura</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let item of pedidosFacturados | paginate: { itemsPerPage: 10, currentPage: pageActual }">
+                            <th scope="row">{{item.id}}</th>
+                            <td>{{item.estado.nombre}}</td>
+                            <td>{{item.fecha}}</td>
+                            <td>
+                                <button type="button" class="btn btn-success" 
+                                    (click)="IdPedidoSeleccionado(item.id)">Ver Factura</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,104 @@
+/* CATEGORIAS */
+
+.titulocatalogo{
+    margin-top: 2%;
+    color: rgb(7, 7, 7);
+    font-size: 200%;
+    font-weight: bolder;
+    text-align: center;
+    font-family: Verdana;
+}
+.imagencategoria{
+    width: 325px;
+    height: 200px;
+    transition: all 0.1s;
+}
+.imagencategoria:hover{
+    cursor: pointer;
+    border-bottom: 2px solid rgb(7, 7, 7);;
+}
+.container{
+    margin-top: 5%;
+}
+
+.categorianame{
+    transition: all 0.1s;
+    color: black;
+    text-decoration: none;
+}
+.categorianame:hover{
+    text-decoration: none;
+    cursor: pointer;
+    border-bottom: 2px solid rgb(255, 145, 0);
+}
+h2{
+    text-align: center;
+    color: rgb(7, 7, 7);
+}
+/* CATALOGO */
+
+.btn{
+    background-color: rgb(255, 145, 0);
+}
+.columnauno{
+    padding: 2%;
+}
+h3{
+    text-align: left;
+}
+h1{
+    text-align: center;
+}
+.plato{
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+.imagenplato{
+    width: 500px;
+    height: 320px;
+}
+.card-text{
+    color: orangered;
+    font-weight: bold;
+}
+.botones{
+    float: right;
+    display: inline-block;
+}
+.btn{
+    background-color: rgb(255, 145, 0);
+    color: whitesmoke;
+}
+#detalleboton{
+    background-color: rgb(22, 115, 221);
+    color: whitesmoke;
+}
+.totalpedido{
+    color: orangered;
+    font-weight: bold;
+}
+/* RESPONSIVE */ 
+@media screen and (max-width: 600px){
+    .categories{
+        display: none;
+    }
+
+    .cart{
+        display: none;
+    }
+
+    .botonesresponsive{
+        text-align: center;
+        margin: 1%;
+        margin-top: 3%;
+    }
+    .imagenplato{
+        width: 325px;
+        height: 200px;
+    }
+}
+@media screen and (min-width: 600px){ /* pantalla normal */
+    .categoriesmobile{
+        display:none;
+    }
+}

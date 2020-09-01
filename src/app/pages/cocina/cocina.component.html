@@ -1,0 +1,95 @@
+<div *ngIf="this.usuario!=null">
+    <div *ngIf="this.usuario.rol==='cocinero' || this.usuario.rol==='administrador'">
+        <div class="text-center">
+            <h1>COCINA</h1>
+            <mat-tab-group class="m-2">
+                <mat-tab label="Comandas">
+                    <div class="container-fluid background">
+                        <div *ngIf="spinner">
+                            <i class="fas fa-sync-alt fa-spin fa-5x m-5"></i>
+                            <h2>Cargando Pedidos</h2>
+                        </div>
+                        <div class="row" *ngIf="!spinner">
+                            <app-comanda *ngFor="let comanda of comandas" [comanda]="comanda" [delivery]="false"
+                                (eliminarComanda)="eliminarComanda($event)"></app-comanda>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Recetas">
+                    <div class="m-3">
+                        <div *ngIf="this.recetas.length == 0">
+                            <i class="fas fa-sync-alt fa-spin fa-5x m-5"></i>
+                            <h2>Cargando Recetas</h2>
+                        </div>
+                        <div *ngIf="this.recetas.length > 0">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Buscador</span>
+                                </div>
+                                <input type="text" name="filterB" class="form-control"
+                                    placeholder="Ingrese el nombre del plato (Ejemplo: Pizza)..." [(ngModel)]="filterB">
+                            </div>
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Nro. Plato</th>
+                                        <th scope="col">Nombre Plato</th>
+                                        <th scope="col">Accion</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="background">
+                                    <tr *ngFor="let receta of recetas | filterBuscarReceta:filterB">
+                                        <td>{{receta.id}}</td>
+                                        <td>{{receta.nombre}}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                                                data-target="#staticBackdrop"
+                                                (click)="modalDatos(receta.nombre,receta.detalle)">
+                                                Ver Ingredientes
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+        <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title" id="staticBackdropLabel">{{modalNombre}}
+                        </h1>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Cantidad</th>
+                                    <th scope="col">Unidad de Medida</th>
+                                    <th scope="col">Nombre</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let modalDet of modalDetalle">
+                                    <td>{{modalDet.cantidad}}</td>
+                                    <td>{{modalDet.ingrediente.unidadMedida.nombre}}</td>
+                                    <td>{{modalDet.ingrediente.nombre}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

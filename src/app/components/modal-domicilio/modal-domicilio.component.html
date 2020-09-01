@@ -1,0 +1,94 @@
+<div class="modal" id="modalDomicilio" data-backdrop="static" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title letra">Agregar Domicilio</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form name="formDomicilio" [formGroup]="formDomicilio" (ngSubmit)="onSave(formDomicilio)">
+                    <input type="hidden" name="id" id="id" formControlName="id">
+
+                    <div class="form-group">
+                        <label for="calle" class="letra">Calle</label>
+                        <input type="text" class="form-control" placeholder="Calle" formControlName="calle">
+                        <div *ngIf="formDomicilio.controls['calle'].invalid &&
+                                    formDomicilio.controls['calle'].touched" class="is-invalid">
+                            Calle requerida.
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-6">
+                            <label for="numero" class="letra">Número</label>
+                            <input type="text" class="form-control" placeholder="Número" formControlName="numero">
+                            <div *ngIf="formDomicilio.controls['numero'].invalid &&
+                                        formDomicilio.controls['numero'].touched" class="is-invalid">
+                                Número requerido.
+                                Solo se permiten números.
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6" formGroupName="localidad">
+                            <div class="form-group">
+                                <label>Localidad:</label>
+                                <select class="custom-select" formControlName="id"
+                                    (change)="onLocalidadChange($event.target.value)" required>
+                                    <option selected disabled value="">Seleccionar...</option>
+                                    <!-- Buscar manera de mostrar el nombre de la localidad pero que se mande su id. -->
+                                    <option *ngFor="let localidad of localidades">{{localidad.nombre}}</option>
+                                </select>
+                                <div *ngIf="formDomicilio.controls['localidad'].invalid &&
+                                        formDomicilio.controls['localidad'].touched" class="is-invalid">
+                                    Se requiere localidad.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-6">
+                            <label for="departamento" class="letra">Departamento</label>
+                            <input type="text" class="form-control" placeholder="Departamento"
+                                formControlName="departamento">
+                            <div *ngIf="formDomicilio.controls['departamento'].invalid &&
+                                        formDomicilio.controls['departamento'].touched" class="is-invalid">
+                                El departamento es requerido.
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="piso" class="letra">Piso</label>
+                            <input type="text" class="form-control" placeholder="Piso" formControlName="piso">
+                            <div *ngIf="formDomicilio.controls['piso'].invalid &&
+                                        formDomicilio.controls['piso'].touched" class="is-invalid">
+                                El piso es requerido.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- hidden porque se hardcodea, no quitar o aparece un error en consola -->
+                    <div hidden formGroupName="propietario">
+                        <div class="form-group">
+                            <label>ID Propietario:</label>
+                            <input formControlName="id" type="number" />
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary letra" data-dismiss="modal" (click)="onReset()"
+                            #btnClose>Cerrar</button>
+                        <button type="submit " class="btn btn-primary letra" #btnClose
+                            [disabled]="formDomicilio.invalid">Agregar</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

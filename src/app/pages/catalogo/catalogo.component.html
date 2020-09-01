@@ -1,0 +1,170 @@
+<div class="raiz" style="margin: 1%;">
+    <div class="nulo" *ngIf="vcategoria === null">
+        <h1 class="titulocatalogo" style="font-family: Verdana;">¿QUE QUERÉS COMER HOY?</h1>
+        <h2 style="font-family: Verdana;">¡Haga click en alguna categoría para acceder a sus artículos!</h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4" *ngFor="let categoria of categorias">
+                    <a (click)="elegirCategoria(categoria.nombre)"><img class="imagencategoria" src="{{categoria.imagen}}"
+                            alt="categoria"></a>
+                    <h2 id="categorii">{{categoria.nombre}}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="seleccion" *ngIf="vcategoria != null">
+        <div class="dou">
+            <div class="row">
+                <div class="col-sm-3 categoriesmobile">
+                    <p class="botonesresponsive">
+                        <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample1" role="button"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            Categorias
+                        </a>
+                        <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample2" role="button"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            Carrito
+                        </a>
+                    </p>
+                    <div class="collapse" id="collapseExample1">
+                        <div class="card card-body">
+                            <div class="columnauno">
+                                <button type="button" class="btn btn-primary" (click)="volverANulo()">
+                                    <h4>
+                                        < Volver</h4>
+                                </button>
+                                <h1 class="titulocategoria">Categorias</h1>
+                                <hr>
+                                <h3 *ngFor="let categoria of categorias">
+                                    <a class="categorianame" (click)="elegirCategoria(categoria.nombre)">
+                                        {{categoria.nombre}}
+                                    </a>
+                                </h3>
+                                <h3>
+                                    <a class="categorianame" (click)="getBebidas()">
+                                        Bebidas
+                                    </a>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="collapse" id="collapseExample2">
+                        <div class="card card-body">
+                            <div>
+                                <h1>Carrito</h1>
+                                <div class="card" style="width: 18rem;">
+                                    <div class="card-body">
+                                        <h5 *ngFor="let detalle of carritoFinal" class="card-title">
+                                            {{detalle.plato.nombre}} ${{detalle.plato.precioVenta}} Cantidad:
+                                            {{detalle.cantidad}} <a (click)="eliminarItem(detalle)"
+                                                style="color: orangered;"><strong>X</strong></a></h5>
+                                        <hr>
+                                        <h5>Bebidas</h5>
+                                        <h5 *ngFor="let detalle of carritoBebidas">{{detalle.insumo.nombre}}
+                                            ${{detalle.insumo.precioVenta}} Cantidad: {{detalle.cantidad}} <a
+                                                (click)="eliminarItem(detalle)"
+                                                style="color: orangered;"><strong>X</strong></a></h5>
+                                        <h5 class="totalpedido">Total: ${{total}}</h5>
+                                        <a (click)="enviarPedido()" class="btn btn-primary">Continuar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3 categories">
+                    <div class="columnauno">
+                        <button type="button" class="btn btn-primary" (click)="volverANulo()">
+                            <h4>
+                                < Volver</h4>
+                        </button>
+                        <h1 class="titulocategoria">Categorias</h1>
+                        <hr>
+                        <h3 *ngFor="let categoria of categorias">
+                            <a class="categorianame" (click)="elegirCategoria(categoria.nombre)">
+                                {{categoria.nombre}}
+                            </a>
+                        </h3>
+                        <h3>
+                            <a class="categorianame" (click)="getBebidas()">
+                                Bebidas
+                            </a>
+                        </h3>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div *ngIf="fechahoy == false" style="color: orangered;">
+                        <h1>El local se encuentra cerrado</h1>
+                        <h3>Horarios de Atención: Lunes a Viernes de 20hs a 00hs. Sábados y Domingos de 11hs a 15hs y de
+                            20hs a 00hs.</h3>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Buscar en esta categoria..."
+                            aria-describedby="basic-addon1" (keyup)="onKeyFilter($event.target.value)">
+                    </div>
+                    <div class="plato" *ngIf="seleccionBebidas == false else esBebida">
+                        <div class="card" *ngFor="let plato of platos">
+                            <div class="card-header" >
+                                {{plato.cantidadVendida}} vendidos.
+                            </div>
+                            <div class="card-body" style="text-align: center;">
+                                <img class="card-img-top imagenplato" src="{{plato.imagen}}" alt="plato" />
+                                <h2 class="card-title" style="text-align: center;">{{plato.nombre}}</h2>
+                                <h3 class="card-text">Precio: $ {{plato.precioVenta}}</h3>
+                                <div class="botones">
+                                    <a id="detalleboton" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#modalDetalle" (click)="verDetalle(plato)">Detalles</a>
+                                    <a class="btn btn-primary" (click)="agregarAlPedido(plato)"
+                                        *ngIf="fechahoy == true">Añadir</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ng-template #esBebida>
+                        <div class="plato">
+                            <div class="card" *ngFor="let bebida of gaseosas">
+                                <div class="card-header">
+                                    Stock Actual: {{bebida.stockActual}}
+                                </div>
+                                <div class="card-body" style="text-align: center;">
+                                    <img class="card-img-top imagenplato" src="{{bebida.imagen}}" alt="plato" />
+                                    <h2 class="card-title">{{bebida.nombre}}</h2>
+                                    <h3 class="card-text">${{bebida.precioVenta}}</h3>
+                                    <div class="botones">
+                                        <a class="btn btn-primary" (click)="agregarGaseosa(bebida)"
+                                            *ngIf="fechahoy == true">Añadir</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+
+                </div>
+                <div class="col-sm-3 cart">
+                    <h1>Carrito</h1>
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h4 *ngFor="let detalle of carritoFinal" class="card-title">{{detalle.plato.nombre}}
+                                ${{detalle.plato.precioVenta}} Cantidad: {{detalle.cantidad}} <a
+                                    (click)="eliminarItem(detalle)" style="color: orangered;"><strong>X</strong></a>
+                            </h4>
+                            <hr>
+                            <h4>Bebidas</h4>
+                            <h4 *ngFor="let detalle of carritoBebidas">{{detalle.insumo.nombre}}
+                                ${{detalle.insumo.precioVenta}} Cantidad: {{detalle.cantidad}} <a
+                                    (click)="eliminarItem(detalle)" style="color: orangered;"><strong>X</strong></a>
+                            </h4>
+                            <h4 class="totalpedido">Total: ${{total}}</h4>
+                            <button (click)="enviarPedidoFinal()" class="btn btn-primary"
+                                *ngIf="fechahoy == true">Continuar</button>
+                            <button class="btn btn-primary" *ngIf="fechahoy == false" disabled>Continuar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-detalle-plato [platoDetalle]="platoDetalle"></app-detalle-plato>

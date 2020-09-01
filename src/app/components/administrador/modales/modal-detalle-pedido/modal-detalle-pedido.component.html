@@ -1,0 +1,62 @@
+<mat-sidenav-container>
+    <mat-sidenav-content>
+        <!-- ACA VA TODO EL CONTENIDO PRINCIPAL -->
+        <!-- <div class="contenedor"> -->
+            <div class="container-btn-new">
+                <mat-form-field class="busqueda">
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Buscar...">
+                </mat-form-field>
+            </div>
+        
+        <div class="tabla" class="mat-elevation-z8">
+            <mat-table [dataSource]="dataSource" matSort>
+
+                <!-- Numero Column -->
+                <ng-container matColumnDef="id">
+                    <mat-header-cell mat-sort-header *matHeaderCellDef> Nº </mat-header-cell>
+                    <mat-cell *matCellDef="let element" class="pointer">
+                        {{element.id}} </mat-cell>
+                </ng-container>
+
+                <!-- Cantidad Column -->
+                <ng-container matColumnDef="cantidad">
+                    <mat-header-cell mat-sort-header *matHeaderCellDef> Cantidad </mat-header-cell>
+                    <mat-cell *matCellDef="let element" class="pointer">
+                        {{element.cantidad}} </mat-cell>
+                </ng-container>
+
+                <!-- Producto Column -->
+                <ng-container matColumnDef="producto" >
+                    <mat-header-cell mat-sort-header *matHeaderCellDef> Producto </mat-header-cell>
+                    <mat-cell *matCellDef="let element" class="pointer">
+                        <span *ngIf="element.plato != null">{{element.plato.nombre}}</span>
+                        <span *ngIf="element.insumo != null">{{element.insumo.nombre}}</span> </mat-cell>
+                </ng-container>
+
+                 <!-- Precio Venta Column -->
+                 <ng-container matColumnDef="precioVenta" >
+                    <mat-header-cell mat-sort-header *matHeaderCellDef> Precio Venta </mat-header-cell>
+                    <mat-cell *matCellDef="let element" class="pointer">
+                        <span *ngIf="element.plato != null">$ {{element.plato.precioVenta}}</span>
+                        <span *ngIf="element.insumo != null">$ {{element.insumo.precioVenta}}</span> </mat-cell>
+                </ng-container>
+
+                <!-- Tiempo Preparación Column -->
+                <ng-container matColumnDef="tiempoPreparacion" >
+                    <mat-header-cell mat-sort-header *matHeaderCellDef> Tiempo Preparación </mat-header-cell>
+                    <mat-cell *matCellDef="let element" class="pointer">
+                        <span *ngIf="element.plato != null">{{element.plato.tiempoPreparacion}} min</span> </mat-cell>
+                </ng-container>
+
+               
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+            </mat-table>
+            <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons aria-label="etiqueta">
+            </mat-paginator>
+        </div>
+        <!-- </div> -->
+    </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,68 @@
+<div *ngIf="this.usuario!=null">
+  <div *ngIf="this.usuario.rol==='cocinero' || this.usuario.rol === 'administrador'">
+    <div class="text-center">
+      <h1>DELIVERY</h1>
+      <mat-tab-group class="m-2">
+        <mat-tab label="Aceptar Pedidos">
+          <div *ngIf="pedidos.length === 0">
+            <i class="fas fa-sync-alt fa-spin fa-5x m-5"></i>
+            <h2>Cargando Pedidos</h2>
+          </div>
+          <div class="mt-3" *ngIf="pedidos.length > 0">
+            <div class="input-group mb-3 col-sm-4">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Localidad:</label>
+              </div>
+              <select class="custom-select" name="filterB" id="inputGroupSelect01" [(ngModel)]="filterB">
+                <option value="" selected="true">Todos</option>
+                <option *ngFor="let localidad of localidades" value="{{ localidad.nombre }}">{{ localidad.nombre }}
+                </option>
+              </select>
+            </div>
+            <div>
+              <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Nro. Pedido</th>
+                    <th scope="col">Dirección</th>
+                    <th scope="col">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody class="background">
+                  <tr *ngFor="let pedido of pedidos | filterBuscarLocalidad:filterB; let i = index">
+                    <th>{{ pedido.id }}</th>
+                    <td>
+                      {{
+                    pedido.domicilio.calle +
+                      " " +
+                      pedido.domicilio.numero +
+                      ", " +
+                      pedido.domicilio.localidad.nombre
+                  }}
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-success" (click)="aceptarPedido(i)">
+                        Aceptar
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Mis Pedidos">
+          <div *ngIf="pedidosAceptados.length === 0">
+            <i class="fas fa-sync-alt fa-spin fa-5x m-5"></i>
+            <h2>Cargando Pedidos Aceptados</h2>
+          </div>
+          <div class="mt-3 row background" *ngIf="pedidosAceptados.length > 0">
+            <app-comanda *ngFor="let pedido of pedidosAceptados; let i = index" [comanda]="pedido" [delivery]="true"
+              [tipoPago]="this.tipoPago[i]" [total]="this.total[i]" (pedidoEntregado)="pedidoEntregado($event)">
+            </app-comanda>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

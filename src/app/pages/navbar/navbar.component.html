@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">
+        <img src="../assets/imagenes/logotipoimg.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+        El Buen Sabor
+      </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <!--INGRESAR A LA APP-->
+        <li class="nav-item">
+          <a class="nav-link" href="/" data-toggle="modal" data-target="#modalIngreso"*ngIf="!isLogged">Ingresar</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/" data-toggle="modal" data-target="#modalRegistro" *ngIf="!isLogged">Registrarse</a>
+        </li>
+        <!--CLIENTE-->
+        <li class="nav-item active">
+          <a class="nav-link" href="/catalogo" *ngIf="isLogged && (rol == 'cliente' || rol == 'administrador')">Menú<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/usuario"  *ngIf="isLogged && (rol == 'cliente' || rol == 'administrador')">Mi Perfil</a>
+        </li>
+        <!--DELIVERY-->
+        <li class="nav-item">
+          <a class="nav-link" href="/delivery" *ngIf="isLogged && (rol == 'delivery' || rol == 'administrador')">Delivery</a>
+        </li>
+        <!--CAJERO-->
+        <li class="nav-item">
+          <a class="nav-link" href="/cajero" *ngIf="isLogged && (rol=='cajero' || rol == 'administrador')">Cajero</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/carrito" *ngIf="isLogged && (rol == 'cliente' || rol=='cajero' || rol == 'administrador')">Carrito</a>
+        </li>
+        <!--COCINERO-->
+        <li class="nav-item">
+          <a class="nav-link" href="/cocina" *ngIf="isLogged && (rol == 'cocinero' || rol == 'administrador')">Cocina</a>
+        </li>
+        <!--ADMINISTRADOR-->
+        <li class="nav-item">
+          <a class="nav-link" href="/administrador" *ngIf="isLogged && rol == 'administrador'">Administrador</a>
+        </li>
+        <!--SALIR-->
+        <li class="nav-item">
+          <a class="nav-link" href="/" *ngIf="isLogged" (click)="onLogout()">Salir</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <app-modalregistro></app-modalregistro>
+  <app-modallogin (rol)=inputlistener($event)></app-modallogin>

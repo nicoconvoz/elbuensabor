@@ -1,0 +1,142 @@
+<!-- Tabla Carrito -->
+<section style="margin-left: 1%;">
+  <script src="https://smtpjs.com/v3/smtp.js">
+  </script>
+  <h1 class="titulos" style="margin-top: 1%;">Carrito de compras</h1>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col" hidden>ID</th>
+          <th scope="col">Cantidad</th>
+          <th scope="col">Nombre del Producto</th>
+          <th scope="col">Precio Unitario</th>
+          <th scope="col">Precio Total</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of detalles">
+          <ng-container *ngIf="item.plato !== null else bebida">
+            <th scope="row" hidden>{{item.id}}</th>
+            <td>{{item.cantidad}}</td>
+            <td>{{item.plato.nombre}}</td>
+            <td>$ {{item.plato.precioVenta}}</td>
+            <td>$ {{item.cantidad * item.plato.precioVenta}}</td>
+            <td>
+              <button type="button" class="btn btn-danger" (click)="delete(item)">Borrar</button>
+            </td>
+          </ng-container>
+          <ng-template #bebida>
+            <th scope="row" hidden>{{item.id}}</th>
+            <td>{{item.cantidad}}</td>
+            <td>{{item.insumo.nombre}}</td>
+            <td>$ {{item.insumo.precioVenta}}</td>
+            <td>$ {{item.cantidad * item.insumo.precioVenta}}</td>
+            <td>
+              <button type="button" class="btn btn-danger" (click)="delete(item)">Borrar</button>
+            </td>
+          </ng-template>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td class="table-info" colspan="2" style="text-align: center;">Total Neto</td>
+          <td class="table-info" colspan="3" style="text-align: center;">$ {{ getTotalNeto() }}</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</section>
+<app-modal-detalle [detalleSeleccionado]="detalleSeleccionado"></app-modal-detalle>
+
+<div style="margin-left: 1%;">
+  <h1 class="titulos" style="margin-top: 2%; text-align: center;">¡Envíe su pedido en 3 simples Pasos!</h1>
+  <br>
+  <div class="row">
+
+    <div class="col-xs-12 col-sm-3">
+      <h2 class="titulos">1) Seleccione su método de entrega</h2>
+      <label class="container titulos">Retiro en local(-10%)
+        <input type="radio" name="radio0" value="local" checked="checked"
+          (change)="onRadioChange($event.target.value)" />
+        <span class="checkmark"></span>
+      </label>
+      <label class="container titulos">Envío por delivery
+        <input type="radio" name="radio0" value="delivery" (change)="onRadioChange($event.target.value)" />
+        <span class="checkmark"></span>
+        <br>
+      </label>
+      <h2 class="titulos">Total a pagar: ${{ getTotalFinal() }}</h2>
+    </div>
+
+    <div class="col-xs-12 col-sm-3">
+      <h2 class="titulos">2) Método de Pago </h2>
+      <label class="container titulos">Con Efectivo
+        <input type="radio" name="radio" id="efecSeleccionado" value="efectivo" checked="checked"
+          (change)="onRadioChangePago($event.target.value)" />
+        <span class="checkmark"></span>
+      </label>
+      <div *ngIf="habilitarTarjeta === true">
+        <label class="container titulos">Con Tarjeta
+          <input type="radio" name="radio" id="tarjSeleccionado" value="tarjeta"
+            (change)="onRadioChangePago($event.target.value)" />
+          <span class="checkmark"></span>
+        </label>
+        <div *ngIf="flagTarjeta">
+          <label for="formGroupExampleInput" style="color: red">*Número Tarjeta (min. 9 dígitos)</label>
+          <input type="number" class="form-control" (change)="onRadioChangeNroTarjeta($event.target.value)"
+            placeholder="Número de tarjeta...">
+          <label for="formGroupExampleInput" style="color: red; margin-top: 1%;">*DNI Titular (min. 7 dígitos)</label>
+          <input type="number" class="form-control" (change)="onRadioChangeDNITarjeta($event.target.value)"
+            placeholder="D.N.I Del titular...">
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-6 col-sm-4">
+      <div *ngIf="flagRadioDireccion else empresa">
+        <h2 class="titulos">3) Seleccione su dirección</h2>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text titulos" for="inputGroupSelect01">Dirección</label>
+          </div>
+          <select class="custom-select" (change)="onChangeDireccion($event.target.value)" required>
+            <option selected disabled value="">Seleccionar...</option>
+            <option *ngFor="let dom of domicilios">{{dom.calle}}</option>
+          </select>
+        </div>
+        <button type="button" class="btn btn-primary btn-block titulos" data-toggle="modal"
+          data-target="#modalDomicilio">+ Agregar Direccion</button>
+        <app-modal-domicilio [id]="idPersona"></app-modal-domicilio>
+      </div>
+
+      <ng-template class="col-xs-6 col-sm-4" #empresa>
+        <h2 class="titulos">3) Seleccionado <b>Saltar Paso</b></h2>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text">Dirección</label>
+          </div>
+          <select class="custom-select">
+            <option selected>Local "El Buen Sabor"</option>
+          </select>
+        </div>
+        <button type="button" class="btn btn-primary btn-block titulos" disabled>+ Agregar Direccion</button>
+      </ng-template>
+
+    </div>
+
+    <div class="col-xs-6 col-sm-2">
+      <h2 class="titulos">¡Confirmar pedido!</h2>
+      <div *ngIf="habilitarBotonFinal == true;else mensajeHabilitar">
+        <button type="button" class="btn btn-success btn-block titulos" (click)="realizarPedido()">Realizar
+          Pedido</button>
+      </div>
+      <ng-template class="col-xs-6 col-sm-2" #mensajeHabilitar>
+        <h2 class="titulos" style="color: red;">Faltan Datos</h2>
+      </ng-template>
+    </div>
+
+  </div>
+
+</div>
