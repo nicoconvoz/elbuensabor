@@ -52,7 +52,7 @@ export class FaltanteStockComponent implements OnInit {
   async getCategoria() {
     await this.service2.getAll().subscribe(response => {
       this.categorias = response;
-      this.getInsumoporCategoria(response[0].id);
+      this.todasCategorias();
     },
       error => {
         alert("Error en getAll" + error);
