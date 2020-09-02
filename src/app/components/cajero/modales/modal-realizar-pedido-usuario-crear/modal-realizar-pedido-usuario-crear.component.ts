@@ -4,6 +4,7 @@ import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 import Swal from 'sweetalert2';
+import { UsuarioService } from 'src/app/services/allServices/usuario.service';
 
 @Component({
   selector: 'app-modal-realizar-pedido-usuario-crear',
@@ -22,7 +23,8 @@ export class ModalRealizarPedidoUsuarioCrearComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<ModalRealizarPedidoUsuarioCrearComponent>,
     public formBuilder: FormBuilder,
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: boolean, private datePipe: DatePipe) {
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: boolean, private datePipe: DatePipe,
+    private authService: UsuarioService) {
     this.dato = data;
   }
 
@@ -74,11 +76,23 @@ export class ModalRealizarPedidoUsuarioCrearComponent implements OnInit {
 
   onAction() {
     let op: boolean = this.password();
+    if(this.action=='Crear' && op){
+      this.authService.registerUser(this.form.controls['email'].value , this.form.controls['password'].value).then(
+        (res)=> {
+          this.authService.isAuth().subscribe( user =>{
+            this.form.controls['fechaNacimiento'].setValue(this.datePipe.transform(this.form.controls['fechaNacimiento'].value, 'yyyy-MM-dd'));
+            this.dialogRef.close({ event: this.action, data: this.form.value });
+          });
+        });
+          
+    }else{
+    
     if (op) {
       this.form.controls['fechaNacimiento'].setValue(this.datePipe.transform(this.form.controls['fechaNacimiento'].value, 'yyyy-MM-dd'));
       this.dialogRef.close({ event: this.action, data: this.form.value });
     }
   }
+}
 
   onCancel() {
     this.dialogRef.close({ event: 'Cancel' });
