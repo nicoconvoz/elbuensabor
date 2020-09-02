@@ -103,10 +103,13 @@
     <div class="form-row">
       <input hidden formControlName="password">
 
-      <mat-form-field class="form-group col-md-4">
+      <mat-form-field *ngIf="this.form.controls['password'].value!=null && this.form.controls['password'].value!=''" class="form-group col-md-4">
         <mat-label>Última Password</mat-label>
-        <input type="password" id="P1" matInput placeholder="Usuario Password">
+        <input type="password" id="P1" value="" matInput placeholder="Usuario Password">
       </mat-form-field>
+      <span *ngIf="this.form.controls['password'].value==null || this.form.controls['password'].value==''" class="form-group col-md-4">
+        <input hidden value="" id="P1">
+      </span>
 
       <mat-form-field class="form-group col-md-4">
         <mat-label>Nueva Password</mat-label>
