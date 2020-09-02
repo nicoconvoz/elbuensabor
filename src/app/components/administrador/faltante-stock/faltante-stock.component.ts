@@ -118,7 +118,8 @@ export class FaltanteStockComponent implements OnInit {
     this.service.post(element).subscribe((result) => {
       this.dataSource.data.push(result);
       this.notifyTable();
-      this.getInsumoporCategoria(this.id);
+      
+      this.todasCategorias();
     });
   }
 
@@ -131,8 +132,8 @@ export class FaltanteStockComponent implements OnInit {
         }
       });
       this.notifyTable();
-      this.getInsumoporCategoria(this.id);
-      //this.getInsumoporCategoria(this.id);
+      
+      this.todasCategorias();
     });
   }
 
