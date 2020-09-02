@@ -5,6 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 import { preserveWhitespacesDefault } from '@angular/compiler';
 import Swal from 'sweetalert2';
+import { UsuarioService } from 'src/app/services/allServices/usuario.service';
 
 @Component({
   selector: 'app-modal-usuario',
@@ -22,7 +23,8 @@ export class ModalUsuarioComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<ModalUsuarioComponent>,
     public formBuilder: FormBuilder,
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: Usuario, private datePipe: DatePipe) {
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: Usuario, private datePipe: DatePipe,
+    private authService: UsuarioService) {
     this.localData = { ...data };
   }
 
@@ -51,14 +53,27 @@ export class ModalUsuarioComponent implements OnInit {
 
   setAction() {
     this.action = (this.localData.id) ? 'Editar' : 'Añadir';
+    
   }
 
   onAction() {
     let op: boolean = this.password();
+    if(this.action=='Añadir' && op){
+      this.authService.registerUser(this.form.controls['email'].value , this.form.controls['password'].value).then(
+        (res)=> {
+          this.authService.isAuth().subscribe( user =>{
+            this.form.controls['fechaNacimiento'].setValue(this.datePipe.transform(this.form.controls['fechaNacimiento'].value, 'yyyy-MM-dd'));
+            this.dialogRef.close({ event: this.action, data: this.form.value });
+          });
+        });
+          
+    }else{
+    
     if (op) {
       this.form.controls['fechaNacimiento'].setValue(this.datePipe.transform(this.form.controls['fechaNacimiento'].value, 'yyyy-MM-dd'));
       this.dialogRef.close({ event: this.action, data: this.form.value });
     }
+  }
   }
 
   onCancel() {
