@@ -82,7 +82,7 @@ export class ModalUsuarioComponent implements OnInit {
   }
 
   public password(): boolean {
-    if ((<HTMLInputElement>document.getElementById("P1")).value === this.localData.password && (<HTMLInputElement>document.getElementById("P2")).value === (<HTMLInputElement>document.getElementById("P3")).value && (<HTMLInputElement>document.getElementById("P2")).value != "" && (<HTMLInputElement>document.getElementById("P2")).value != null) {
+    if (((<HTMLInputElement>document.getElementById("P1")).value === this.localData.password || this.localData.password==null)&& (<HTMLInputElement>document.getElementById("P2")).value === (<HTMLInputElement>document.getElementById("P3")).value && (<HTMLInputElement>document.getElementById("P2")).value != "" && (<HTMLInputElement>document.getElementById("P2")).value != null) {
       this.form.controls['password'].setValue((<HTMLInputElement>document.getElementById("P2")).value);
       return true;
     } else {
@@ -109,7 +109,7 @@ export class ModalUsuarioComponent implements OnInit {
     if (o) {
       this.form.controls['esCliente'].setValue(true);
       this.form.controls['esClienteOpciones'].setValue("true");
-      this.form.controls['rol'].setValue("Cliente");
+      this.form.controls['rol'].setValue("cliente");
     } else {
       this.form.controls['rol'].setValue(this.rolGuardado);
       this.form.controls['esClienteOpciones'].setValue("false");
