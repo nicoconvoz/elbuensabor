@@ -29,7 +29,7 @@ export class InsumoComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getCategoria()
+    this.getCategoria();
     this.traducirPaginator();
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
@@ -50,8 +50,8 @@ export class InsumoComponent implements OnInit {
   async getCategoria() {
     await this.service2.getAll().subscribe(response => {
       this.categorias = response;
-      console.log(response[0].id);
-      this.getInsumoporCategoria(response[0].id);
+      
+    this.todasCategorias();
     },
       error => {
         alert("Error en getAll" + error);
@@ -107,7 +107,7 @@ export class InsumoComponent implements OnInit {
     this.service.post(element).subscribe((result) => {
       this.dataSource.data.push(result);
       this.notifyTable();
-      this.getInsumoporCategoria(this.id);
+      this.todasCategorias();
     });
   }
 
@@ -121,8 +121,7 @@ export class InsumoComponent implements OnInit {
         }
       });
       this.notifyTable();
-      this.getInsumoporCategoria(this.id);
-      //this.getInsumoporCategoria(this.id);
+      this.todasCategorias();
     });
   }
 
